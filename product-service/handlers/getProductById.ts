@@ -1,9 +1,9 @@
-import { APIGatewayProxyHandler } from 'aws-lambda';
+import { APIGatewayProxyHandler, APIGatewayProxyEvent } from 'aws-lambda';
 import { RESPONSE } from 'lib/constants/response';
 import { productsService } from 'lib/services/products';
 import 'source-map-support/register';
 
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
+export const getProductById = async (event: APIGatewayProxyEvent) => {
   try {
     const { id } = event?.pathParameters || {};
 
@@ -21,7 +21,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     return {
       statusCode: 204,
-      body: null,
+      body: JSON.stringify(null),
     };
   } catch (e) {
     console.error('Error while executing lambda', e);
@@ -30,4 +30,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       message: 'Internal Server Error',
     });
   }
+};
+
+export const handler: APIGatewayProxyHandler = async event => {
+  return getProductById(event);
 };

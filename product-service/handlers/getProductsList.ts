@@ -3,7 +3,7 @@ import { RESPONSE } from 'lib/constants/response';
 import { productsService } from 'lib/services/products';
 import 'source-map-support/register';
 
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
+export const getProductsList = async () => {
   try {
     const products: Product[] = await productsService.findAll();
 
@@ -13,4 +13,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     return RESPONSE._500({ message: 'Internal Server Error' });
   }
+};
+
+export const handler: APIGatewayProxyHandler = async () => {
+  return getProductsList();
 };
