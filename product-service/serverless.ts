@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import type { Serverless } from 'serverless/aws';
 
 const serverlessConfiguration: Serverless = {
@@ -12,7 +13,7 @@ const serverlessConfiguration: Serverless = {
     },
   },
   // Add the serverless-webpack plugin
-  plugins: ['serverless-webpack'],
+  plugins: ['serverless-webpack', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
@@ -47,6 +48,23 @@ const serverlessConfiguration: Serverless = {
             method: 'get',
             path: '/products/{id}',
             cors: true,
+          },
+        },
+      ],
+    },
+    createProduct: {
+      handler: 'handlers/createProduct.handler',
+      events: [
+        {
+          http: {
+            method: 'post',
+            path: '/products',
+            cors: true,
+            request: {
+              schema: {
+                'application/json': '${file(request-schema/create-product.json)}',
+              },
+            },
           },
         },
       ],

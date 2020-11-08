@@ -6,11 +6,12 @@ describe('getProductsList.handler', () => {
   test('should return all products', async () => {
     const mockProducts: Product[] = [
       {
-        id: 1,
+        id: '1',
         description: 'test',
         title: 'test',
         imageUrl: 'test.com',
         price: 20,
+        count: 2,
       },
     ];
 
