@@ -1,4 +1,4 @@
-insert into products(title, description, imageUrl, price)
+insert into products(title, description, image_url, price)
   values
     (
       'T-shirt France 2020',
@@ -13,7 +13,6 @@ insert into products(title, description, imageUrl, price)
       50
     ),
     (
-      3,
       'T-shirt Brazil 2020',
       'Brazil national team t-shirt',
       'https://www.soccerlord.se/wp-content/uploads/2016/03/Brazil-Home-Football-Shirt-2020.jpg',

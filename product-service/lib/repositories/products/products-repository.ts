@@ -7,7 +7,7 @@ export async function getAll(): Promise<Product[]> {
     await client.connect();
 
     const { rows } = await client.query<Product>(`
-      SELECT p.id, p.title, p.description, p.price, p.imageUrl, s.count from products p
+      SELECT p.id, p.title, p.description, p.price, p.image_url as "imageUrl", s.count from products p
         LEFT JOIN stocks s
         on p.id = s.product_id;
     `);
@@ -25,7 +25,7 @@ export async function findById(id: string): Promise<Product> {
     await client.connect();
 
     const { rows } = await client.query<Product>(`
-      SELECT p.id, p.title, p.description, p.price, p.imageUrl, s.count from products p
+      SELECT p.id, p.title, p.description, p.price, p.image_url as "imageUrl", s.count from products p
         LEFT JOIN stocks s
         on p.id = s.product_id
         WHERE p.id = '${id}';
@@ -47,7 +47,7 @@ export async function create(createProductDto: CreateProductDto): Promise<Produc
 
     const { rows: productRows } = await client.query<Product>(
       `
-        INSERT INTO products(title, description, price, imageUrl)
+        INSERT INTO products(title, description, price, image_url)
           VALUES ($1, $2, $3, $4)
           RETURNING *
       `,
