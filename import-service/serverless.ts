@@ -52,6 +52,24 @@ const serverlessConfiguration: Serverless = {
         },
       ],
     },
+    importFileParser: {
+      handler: 'handlers/importFileParser.handler',
+      events: [
+        {
+          s3: {
+            bucket: 'arsiompeshkonodejsinaws2-product-import',
+            event: 's3:ObjectCreated:*',
+            rules: [
+              {
+                prefix: 'uploaded',
+                suffix: '',
+              },
+            ],
+            existing: true,
+          },
+        },
+      ],
+    },
   },
 };
 
