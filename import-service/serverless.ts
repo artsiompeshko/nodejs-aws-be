@@ -29,8 +29,13 @@ const serverlessConfiguration: Serverless = {
     iamRoleStatements: [
       {
         Effect: 'Allow',
-        Action: 's3:PutObject',
+        Action: 'S3:ListBucket',
         Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws2-product-import',
+      },
+      {
+        Effect: 'Allow',
+        Action: 's3:*',
+        Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws2-product-import/*',
       },
     ],
   },
