@@ -1,0 +1,36 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Create product dto schema",
+  "required": ["title", "price", "count"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Name of the product",
+      "default": ""
+    },
+    "price": {
+      "type": "number",
+      "title": "Price of the product",
+      "default": "",
+      "pattern": "^[0-9]+$"
+    },
+    "imageUrl": {
+      "type": "string",
+      "title": "Image url",
+      "default": ""
+    },
+    "description": {
+      "type": "string",
+      "title": "Descriprion of the product",
+      "default": ""
+    },
+    "count": {
+      "type": "number",
+      "title": "Count of products in the stock",
+      "default": "",
+      "pattern": "^[0-9]+$"
+    }
+  }
+}

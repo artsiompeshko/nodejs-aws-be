@@ -6,8 +6,14 @@ export async function findAll(): Promise<Product[]> {
   return products;
 }
 
-export async function findById(id: number) {
+export async function findById(id: string): Promise<Product> {
   const product: Product = await productsRepository.findById(id);
+
+  return product;
+}
+
+export async function create(createProductDto: CreateProductDto): Promise<Product> {
+  const product: Product = await productsRepository.create(createProductDto);
 
   return product;
 }

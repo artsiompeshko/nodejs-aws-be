@@ -14,11 +14,12 @@ describe('getProductById.handler', () => {
       } as any);
 
       const mockProduct: Product = {
-        id: 1,
+        id: '1',
         description: 'test',
         title: 'test',
         imageUrl: 'test.com',
         price: 20,
+        count: 1,
       };
 
       productsService.findById = jest.fn().mockReturnValue(mockProduct);
