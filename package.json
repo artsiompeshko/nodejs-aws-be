@@ -4,7 +4,6 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "test": "jest",
     "format": "prettier --write \"./**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"./**/*.ts\" --fix"
   },

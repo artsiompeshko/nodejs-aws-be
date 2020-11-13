@@ -1,6 +1,6 @@
 import { S3Handler, S3Event } from 'aws-lambda';
 
-import { importService } from 'lib/services';
+import { importService } from 'lib/services/import';
 
 import 'source-map-support/register';
 
