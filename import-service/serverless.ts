@@ -13,7 +13,7 @@ const serverlessConfiguration: Serverless = {
     },
   },
   // Add the serverless-webpack plugin
-  plugins: ['serverless-webpack'],
+  plugins: ['serverless-webpack', 'serverless-dotenv-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
@@ -25,6 +25,12 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      SQS_URL: {
+        Ref: 'catalogItemsQueue',
+      },
+      SNS_ARN_URL: {
+        Ref: 'createProductTopic',
+      },
     },
     iamRoleStatements: [
       {
@@ -36,6 +42,20 @@ const serverlessConfiguration: Serverless = {
         Effect: 'Allow',
         Action: 's3:*',
         Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws2-product-import/*',
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: {
+          'Fn::GetAtt': ['catalogItemsQueue', 'Arn'],
+        },
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sns:*',
+        Resource: {
+          Ref: 'createProductTopic',
+        },
       },
     ],
   },
@@ -69,6 +89,45 @@ const serverlessConfiguration: Serverless = {
           },
         },
       ],
+    },
+    catalogBatchProcess: {
+      handler: 'handlers/catalogBatchProcess.handler',
+      events: [
+        {
+          sqs: {
+            arn: {
+              'Fn::GetAtt': ['catalogItemsQueue', 'Arn'],
+            },
+            batchSize: 5,
+          },
+        },
+      ],
+    },
+  },
+  resources: {
+    Resources: {
+      catalogItemsQueue: {
+        Type: 'AWS::SQS::Queue',
+        Properties: {
+          QueueName: 'catalogItemsQueue',
+        },
+      },
+      createProductTopic: {
+        Type: 'AWS::SNS::Topic',
+        Properties: {
+          TopicName: 'createProductTopic',
+        },
+      },
+      createTopicSubscriptuion: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'peshkoartembsu@gmail.com',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'createProductTopic',
+          },
+        },
+      },
     },
   },
 };
