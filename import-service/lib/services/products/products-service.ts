@@ -13,6 +13,12 @@ async function sendNotification(message: string) {
       Subject: 'Products import',
       Message: message,
       TopicArn: process.env.SNS_ARN_URL,
+      MessageAttributes: {
+        title: {
+          DataType: 'String',
+          StringValue: message.includes('Lyon') ? 'Lyon' : 'Unknown',
+        },
+      },
     })
     .promise();
 

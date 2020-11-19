@@ -128,6 +128,19 @@ const serverlessConfiguration: Serverless = {
           },
         },
       },
+      createTopicSubscriptuionLyon: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          Endpoint: 'artsiom_peshko@epam.com',
+          Protocol: 'email',
+          TopicArn: {
+            Ref: 'createProductTopic',
+          },
+          FilterPolicy: {
+            title: ['Lyon'],
+          },
+        },
+      },
     },
   },
 };
