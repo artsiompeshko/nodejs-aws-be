@@ -20,6 +20,7 @@ export function getSignedUrl(fileName: string): string {
 
 async function parseRecord(record: any): Promise<void> {
   const s3 = new AWS.S3({ region: 'eu-west-1' });
+  const sqs = new AWS.SQS({ region: 'eu-west-1' });
 
   return new Promise((resolve, reject) => {
     const recordKey = record.s3.object.key;
@@ -34,8 +35,22 @@ async function parseRecord(record: any): Promise<void> {
 
     s3Stream
       .pipe(csvParser())
-      .on('data', data => {
+      .on('data', async data => {
         console.info(data);
+
+        try {
+          console.info('Sending to SQS', process.env.SQS_URL);
+          await sqs
+            .sendMessage({
+              MessageBody: JSON.stringify(data),
+              QueueUrl: process.env.SQS_URL,
+            })
+            .promise();
+
+          console.info('Successfully sent to SQS', process.env.SQS_URL);
+        } catch (err) {
+          console.error('Error while sending to SQS', process.env.SQS_URL);
+        }
       })
       .on('error', e => {
         console.error(e);
