@@ -17,7 +17,7 @@ const serverlessConfiguration: Serverless = {
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
-    profile: 'nodejs-in-aws-2',
+    profile: 'nodejs-in-aws-3',
     region: 'eu-west-1',
     stage: 'dev',
     apiGateway: {

@@ -17,7 +17,7 @@ const serverlessConfiguration: Serverless = {
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
-    profile: 'nodejs-in-aws-2',
+    profile: 'nodejs-in-aws-3',
     region: 'eu-west-1',
     stage: 'dev',
     apiGateway: {
@@ -36,12 +36,12 @@ const serverlessConfiguration: Serverless = {
       {
         Effect: 'Allow',
         Action: 'S3:ListBucket',
-        Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws2-product-import',
+        Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws3-product-import',
       },
       {
         Effect: 'Allow',
         Action: 's3:*',
-        Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws2-product-import/*',
+        Resource: 'arn:aws:s3:::arsiompeshkonodejsinaws3-product-import/*',
       },
       {
         Effect: 'Allow',
@@ -70,7 +70,7 @@ const serverlessConfiguration: Serverless = {
             cors: true,
             authorizer: {
               name: 'basicAuthorizer',
-              arn: 'arn:aws:lambda:eu-west-1:610505153162:function:authorization-service-dev-basicAuthorizer',
+              arn: 'arn:aws:lambda:eu-west-1:063282676693:function:authorization-service-dev-basicAuthorizer',
               type: 'token',
               resultTtlInSeconds: 0,
             },
@@ -83,7 +83,7 @@ const serverlessConfiguration: Serverless = {
       events: [
         {
           s3: {
-            bucket: 'arsiompeshkonodejsinaws2-product-import',
+            bucket: 'arsiompeshkonodejsinaws3-product-import',
             event: 's3:ObjectCreated:*',
             rules: [
               {
